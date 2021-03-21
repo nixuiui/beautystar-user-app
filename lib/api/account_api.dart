@@ -37,6 +37,19 @@ class AccountApi extends MainApi {
     }
   }
   
+  Future<bool> forgotPassword({String email}) async {
+    try {
+      await sendRequest(
+        url: "$host/forgotpassword",
+        requestMethod: RequestMethod.POST,
+        body: {"email": email}
+      );
+      return true;
+    } catch (error) {
+      throw error;
+    }
+  }
+  
   Future<Account> me() async {
     try {
       final response = await sendRequest(
@@ -54,6 +67,7 @@ class AccountApi extends MainApi {
       final response = await sendRequest(
         url: "$host/user/me/password",
         requestMethod: RequestMethod.PATCH,
+        useAuth: true,
         body: {
           "oldPassword" : oldPassword,
           "password" : password

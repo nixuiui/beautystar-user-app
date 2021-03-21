@@ -2,8 +2,10 @@ import 'package:beautystar_user_app/api/account_api.dart';
 import 'package:beautystar_user_app/app/locator.dart';
 import 'package:beautystar_user_app/app/router.gr.dart';
 import 'package:beautystar_user_app/models/account.dart';
+import 'package:beautystar_user_app/models/library_model.dart';
 import 'package:beautystar_user_app/services/local_database_service.dart';
 import 'package:beautystar_user_app/ui/custom_dialogs/base_custom_dialog.dart';
+import 'package:nx_flutter_ui_starter_pack/nx_flutter_ui_starter_pack.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 
@@ -15,6 +17,8 @@ class RegisterViewModel extends BaseViewModel {
 
   var account = Account();
   var api = AccountApi();
+  var genders = locator<LocalDatabaseService>().getLibrariesByCategory(CategoryEnum.Gender);
+  var gender = NxOptions<LibraryModel>();
 
   var nameErrorText = '';
   var dateErrorText = '';
@@ -31,6 +35,12 @@ class RegisterViewModel extends BaseViewModel {
 
   updateDate(DateTime date) {
     account.birthDate = date;
+    notifyListeners();
+  }
+  
+  updateGender(NxOptions<LibraryModel> data) {
+    gender = data;
+    account.gender = data.value.id;
     notifyListeners();
   }
 

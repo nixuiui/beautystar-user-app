@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 import 'package:nx_flutter_ui_starter_pack/nx_button.dart';
+import 'package:nx_flutter_ui_starter_pack/nx_select_box.dart';
 import 'package:nx_flutter_ui_starter_pack/nx_select_date.dart';
 import 'package:nx_flutter_ui_starter_pack/nx_text_field.dart';
 import 'package:stacked/stacked.dart';
@@ -57,6 +58,14 @@ class RegisterView extends ViewModelBuilderWidget<RegisterViewModel> {
               ),
             onChanged: (val) => model.account.nama = val,
             textError: model.nameErrorText,
+          ),
+          SizedBox(height: 32),
+          NxSelectBox(
+            label: "Jenis Kelamin",
+            text: model?.gender?.name ?? '',
+            options: model.genders,
+            selected: model?.gender,
+            onSelected: (val) => model.updateGender(val)
           ),
           SizedBox(height: 32),
           NxSelectDate(

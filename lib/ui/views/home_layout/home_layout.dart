@@ -1,5 +1,8 @@
+import 'package:beautystar_user_app/app/locator.dart';
+import 'package:beautystar_user_app/services/local_database_service.dart';
 import 'package:beautystar_user_app/ui/views/home/home_view.dart';
 import 'package:beautystar_user_app/ui/views/login/login_view.dart';
+import 'package:beautystar_user_app/ui/views/profile/profile_view.dart';
 import 'package:flutter/material.dart';
 
 class HomeLayout extends StatefulWidget {
@@ -9,8 +12,8 @@ class HomeLayout extends StatefulWidget {
 
 class _HomeLayoutState extends State<HomeLayout> {
   int _selectedIndex = 0;
-  static const TextStyle optionStyle =
-      TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
+  static TextStyle optionStyle = TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
+  var isLoggedIn = locator<LocalDatabaseService>().isLoggedIn();
 
   final tabs = <Widget>[
     HomeView(),
@@ -18,14 +21,11 @@ class _HomeLayoutState extends State<HomeLayout> {
       'Index 1: Business',
       style: optionStyle,
     ),
-    Text(
-      'Index 2: School',
-      style: optionStyle,
-    ),
+    ProfileView(),
   ];
 
   void _onItemTapped(int index) {
-    if(index == 2) {
+    if(index == 2 && !isLoggedIn) {
       Navigator.push(context, MaterialPageRoute(
         builder: (context) => LoginView()
       ));
