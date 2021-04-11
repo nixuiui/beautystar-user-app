@@ -14,6 +14,7 @@ class MuaViewModel extends BaseViewModel {
   final api = MuaApi();
 
   List<NxOptions<MuaCategory>> categories = locator<LocalDatabaseService>().getMuaCategories();
+  NxOptions<MuaCategory> categorySelected;
   MuaCategory category;
 
   var mua = <Mua>[];
@@ -28,6 +29,15 @@ class MuaViewModel extends BaseViewModel {
 
   Future init() async {
     scrollController.addListener(_onScroll);
+    if(category != null) {
+      categorySelected = NxOptions(name: category?.name, value: category);
+    }
+    refresh();
+  }
+
+  updateCategory(NxOptions<MuaCategory> data) {
+    categorySelected = data;
+    notifyListeners();
     refresh();
   }
 
@@ -62,6 +72,7 @@ class MuaViewModel extends BaseViewModel {
         page: page, 
         limit: limit, 
         search: search,
+        category: categorySelected?.value?.id
       );
       if(!isLoadMore) mua = response;
       else mua.addAll(response);

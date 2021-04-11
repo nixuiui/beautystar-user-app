@@ -44,11 +44,11 @@ class LocalDatabaseService {
       : null;
   }
   
-  // Libraries related
+  // Mua Category related
   void saveMuaCategoriesToBox(List<MuaCategory> data) => muaCategoriesBox.put(0, muaCategoriesToJson(data));
   List<NxOptions<MuaCategory>> getMuaCategories() {
     return muaCategoriesBox.isNotEmpty 
-      ? muaCategoriesFromJson(librariesBox.getAt(0)).map((e) => NxOptions(
+      ? muaCategoriesFromJson(muaCategoriesBox.getAt(0)).map((e) => NxOptions(
         name: e.name,
         value: e
       )).toList() 

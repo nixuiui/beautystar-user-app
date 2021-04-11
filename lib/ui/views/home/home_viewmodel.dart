@@ -4,6 +4,7 @@ import 'package:beautystar_user_app/app/locator.dart';
 import 'package:beautystar_user_app/app/router.gr.dart';
 import 'package:beautystar_user_app/models/home_category.dart';
 import 'package:beautystar_user_app/models/mua.dart';
+import 'package:beautystar_user_app/models/mua_category.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 
@@ -40,8 +41,21 @@ class HomeViewModel extends BaseViewModel {
     }
   }
 
-  navigateToMua() {
-    _navigationService.navigateTo(Routes.muaView);
+  navigateToMua({MuaCategory category}) {
+    _navigationService.navigateTo(
+      Routes.muaView,
+      arguments: MuaViewArguments(
+        category: category
+      )
+    );
+  }
+
+  navigateToHome() {
+    _navigationService.clearStackAndShow(Routes.splashView);
+  }
+  
+  navigateToSearchMua() {
+    _navigationService.navigateTo(Routes.searchMuaView);
   }
     
   loadHomeCategories() async {
@@ -55,14 +69,6 @@ class HomeViewModel extends BaseViewModel {
       isLoadingHomeCategories = false;
       notifyListeners();
     }
-  }
-
-  navigateToHome() {
-    _navigationService.clearStackAndShow(Routes.splashView);
-  }
-  
-  navigateToSearchMua() {
-    _navigationService.navigateTo(Routes.searchMuaView);
   }
 
   refresh() {

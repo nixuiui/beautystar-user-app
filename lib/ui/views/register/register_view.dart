@@ -141,4 +141,5 @@ class RegisterView extends ViewModelBuilderWidget<RegisterViewModel> {
       ),
     );
   }
+
 }

@@ -1,6 +1,7 @@
 import 'package:beautystar_user_app/app/app_consts.dart';
 import 'package:beautystar_user_app/models/home_category.dart';
 import 'package:beautystar_user_app/models/mua.dart';
+import 'package:beautystar_user_app/models/mua_category.dart';
 import 'package:beautystar_user_app/ui/views/home/home_viewmodel.dart';
 import 'package:beautystar_user_app/ui/widgets/items/mua_item_square.dart';
 import 'package:beautystar_user_app/ui/widgets/items/slider_item.dart';
@@ -144,6 +145,10 @@ class HomeView extends ViewModelBuilderWidget<HomeViewModel> {
                 borderRadius: 8,
                 color: Colors.black87.withOpacity(0.2),
                 padding: 8,
+                onPressed: () => model.navigateToMua(category: MuaCategory(
+                  name: model.homeCategories[index]?.muaService?.name,
+                  id: model.homeCategories[index]?.muaService?.id
+                )),
                 child: Center(
                   child: NxText(
                     model.homeCategories[index]?.muaService?.name,

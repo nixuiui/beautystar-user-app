@@ -26,8 +26,8 @@ class HomeLayoutView extends ViewModelBuilderWidget<HomeLayoutViewModel> {
             label: 'Home',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.business),
-            label: 'Business',
+            icon: Icon(Icons.bookmark),
+            label: 'Booking',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.person),
