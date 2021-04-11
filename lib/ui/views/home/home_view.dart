@@ -68,7 +68,14 @@ class HomeView extends ViewModelBuilderWidget<HomeViewModel> {
       ),
       child: Scaffold(
         appBar: AppBar(
-          title: Image.asset("assets/logo_text.png", height: 20,)
+          title: Image.asset("assets/logo_text.png", height: 20,),
+          actions: [
+            IconButton(
+              icon: Icon(Icons.search), 
+              onPressed: model.navigateToSearchMua
+            ),
+            SizedBox(width: 16),
+          ],
         ),
         body: ListView(
           children: [

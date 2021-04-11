@@ -22,6 +22,7 @@ import '../ui/views/profile/profile_view.dart';
 import '../ui/views/profile/setting/edit_password/edit_password_view.dart';
 import '../ui/views/profile/setting/edit_profile/edit_profile_view.dart';
 import '../ui/views/register/register_view.dart';
+import '../ui/views/search_mua/search_mua_view.dart';
 import '../ui/views/splash/splash_view.dart';
 
 class Routes {
@@ -36,6 +37,7 @@ class Routes {
   static const String editProfileView = '/edit-profile-view';
   static const String muaView = '/mua-view';
   static const String muaDetailView = '/mua-detail-view';
+  static const String searchMuaView = '/search-mua-view';
   static const all = <String>{
     splashView,
     registerView,
@@ -48,6 +50,7 @@ class Routes {
     editProfileView,
     muaView,
     muaDetailView,
+    searchMuaView,
   };
 }
 
@@ -66,6 +69,7 @@ class Router extends RouterBase {
     RouteDef(Routes.editProfileView, page: EditProfileView),
     RouteDef(Routes.muaView, page: MuaView),
     RouteDef(Routes.muaDetailView, page: MuaDetailView),
+    RouteDef(Routes.searchMuaView, page: SearchMuaView),
   ];
   @override
   Map<Type, AutoRouteFactory> get pagesMap => _pagesMap;
@@ -152,6 +156,12 @@ class Router extends RouterBase {
           id: args.id,
           mua: args.mua,
         ),
+        settings: data,
+      );
+    },
+    SearchMuaView: (data) {
+      return MaterialPageRoute<dynamic>(
+        builder: (context) => SearchMuaView(),
         settings: data,
       );
     },

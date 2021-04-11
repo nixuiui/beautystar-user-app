@@ -9,6 +9,7 @@ import 'package:beautystar_user_app/ui/views/profile/profile_view.dart';
 import 'package:beautystar_user_app/ui/views/profile/setting/edit_password/edit_password_view.dart';
 import 'package:beautystar_user_app/ui/views/profile/setting/edit_profile/edit_profile_view.dart';
 import 'package:beautystar_user_app/ui/views/register/register_view.dart';
+import 'package:beautystar_user_app/ui/views/search_mua/search_mua_view.dart';
 import 'package:beautystar_user_app/ui/views/splash/splash_view.dart';
 
 @MaterialAutoRouter(
@@ -24,6 +25,7 @@ import 'package:beautystar_user_app/ui/views/splash/splash_view.dart';
     MaterialRoute(page: EditProfileView),
     MaterialRoute(page: MuaView),
     MaterialRoute(page: MuaDetailView),
+    MaterialRoute(page: SearchMuaView),
   ],
 )
 class $Router {}

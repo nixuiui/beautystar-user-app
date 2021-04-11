@@ -60,6 +60,10 @@ class HomeViewModel extends BaseViewModel {
   navigateToHome() {
     _navigationService.clearStackAndShow(Routes.splashView);
   }
+  
+  navigateToSearchMua() {
+    _navigationService.navigateTo(Routes.searchMuaView);
+  }
 
   refresh() {
     loadDataWeddingMua();
