@@ -4,9 +4,13 @@ import 'package:beautystar_user_app/models/city.dart';
 import 'package:beautystar_user_app/models/province.dart';
 import 'package:indonesia/indonesia.dart';
 
-List<Mua> muaFromJson(String str) => List<Mua>.from(json.decode(str).map((x) => Mua.fromJson(x)));
+List<Mua> muasFromJson(String str) => List<Mua>.from(json.decode(str).map((x) => Mua.fromJson(x)));
 
-String muaToJson(List<Mua> data) => json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
+String muasToJson(List<Mua> data) => json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
+
+Mua muaFromJson(String str) => Mua.fromJson(json.decode(str));
+
+String muaToJson(Mua data) => json.encode(data.toJson());
 
 class Mua {
     Mua({
@@ -86,6 +90,15 @@ class Mua {
         "province": province.toJson(),
         "city": city.toJson(),
     };
+
+    getMinPrice() {
+      String rangePrice = "Rp. 0";
+      if (services != null && services.isNotEmpty) {
+        services.sort((a, b) => a.price.compareTo(b.price));
+        rangePrice = rupiah(services.first.price.toString());
+      }
+      return rangePrice;
+    }
 
     getRangePrice() {
       String rangePrice = "Rp. 0";

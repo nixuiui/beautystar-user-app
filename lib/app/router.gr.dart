@@ -9,11 +9,15 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 
+import '../models/home_category.dart';
 import '../models/mua.dart';
+import '../models/mua_category.dart';
 import '../ui/views/forgot_password/forgot_password_view.dart';
 import '../ui/views/home/home_view.dart';
 import '../ui/views/home_layout/home_layout_view.dart';
 import '../ui/views/login/login_view.dart';
+import '../ui/views/mua/mua_view.dart';
+import '../ui/views/mua_detail/mua_detail_view.dart';
 import '../ui/views/profile/profile_view.dart';
 import '../ui/views/profile/setting/edit_password/edit_password_view.dart';
 import '../ui/views/profile/setting/edit_profile/edit_profile_view.dart';
@@ -30,6 +34,8 @@ class Routes {
   static const String profileView = '/profile-view';
   static const String editPasswordView = '/edit-password-view';
   static const String editProfileView = '/edit-profile-view';
+  static const String muaView = '/mua-view';
+  static const String muaDetailView = '/mua-detail-view';
   static const all = <String>{
     splashView,
     registerView,
@@ -40,6 +46,8 @@ class Routes {
     profileView,
     editPasswordView,
     editProfileView,
+    muaView,
+    muaDetailView,
   };
 }
 
@@ -56,6 +64,8 @@ class Router extends RouterBase {
     RouteDef(Routes.profileView, page: ProfileView),
     RouteDef(Routes.editPasswordView, page: EditPasswordView),
     RouteDef(Routes.editProfileView, page: EditProfileView),
+    RouteDef(Routes.muaView, page: MuaView),
+    RouteDef(Routes.muaDetailView, page: MuaDetailView),
   ];
   @override
   Map<Type, AutoRouteFactory> get pagesMap => _pagesMap;
@@ -90,8 +100,12 @@ class Router extends RouterBase {
       );
       return MaterialPageRoute<dynamic>(
         builder: (context) => HomeView(
+          homeCategories: args.homeCategories,
           weddingMua: args.weddingMua,
+          graduationMua: args.graduationMua,
+          homeCategoriesUpdated: args.homeCategoriesUpdated,
           weddingMuaUpdated: args.weddingMuaUpdated,
+          graduationMuaUpdated: args.graduationMuaUpdated,
         ),
         settings: data,
       );
@@ -120,6 +134,27 @@ class Router extends RouterBase {
         settings: data,
       );
     },
+    MuaView: (data) {
+      final args = data.getArgs<MuaViewArguments>(
+        orElse: () => MuaViewArguments(),
+      );
+      return MaterialPageRoute<dynamic>(
+        builder: (context) => MuaView(category: args.category),
+        settings: data,
+      );
+    },
+    MuaDetailView: (data) {
+      final args = data.getArgs<MuaDetailViewArguments>(
+        orElse: () => MuaDetailViewArguments(),
+      );
+      return MaterialPageRoute<dynamic>(
+        builder: (context) => MuaDetailView(
+          id: args.id,
+          mua: args.mua,
+        ),
+        settings: data,
+      );
+    },
   };
 }
 
@@ -129,7 +164,30 @@ class Router extends RouterBase {
 
 /// HomeView arguments holder class
 class HomeViewArguments {
+  final List<HomeCategory> homeCategories;
   final List<Mua> weddingMua;
+  final List<Mua> graduationMua;
+  final void Function(List<HomeCategory>) homeCategoriesUpdated;
   final void Function(List<Mua>) weddingMuaUpdated;
-  HomeViewArguments({this.weddingMua, this.weddingMuaUpdated});
+  final void Function(List<Mua>) graduationMuaUpdated;
+  HomeViewArguments(
+      {this.homeCategories,
+      this.weddingMua,
+      this.graduationMua,
+      this.homeCategoriesUpdated,
+      this.weddingMuaUpdated,
+      this.graduationMuaUpdated});
+}
+
+/// MuaView arguments holder class
+class MuaViewArguments {
+  final MuaCategory category;
+  MuaViewArguments({this.category});
+}
+
+/// MuaDetailView arguments holder class
+class MuaDetailViewArguments {
+  final String id;
+  final Mua mua;
+  MuaDetailViewArguments({this.id, this.mua});
 }

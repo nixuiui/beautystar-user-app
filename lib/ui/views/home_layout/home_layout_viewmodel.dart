@@ -1,5 +1,6 @@
 import 'package:beautystar_user_app/api/account_api.dart';
 import 'package:beautystar_user_app/api/general_api.dart';
+import 'package:beautystar_user_app/api/mua_api.dart';
 import 'package:beautystar_user_app/app/locator.dart';
 import 'package:beautystar_user_app/app/router.gr.dart';
 import 'package:beautystar_user_app/models/home_category.dart';
@@ -16,6 +17,7 @@ class HomeLayoutViewModel extends BaseViewModel {
   final _localDatabaseService = locator<LocalDatabaseService>();
   final _navigationService = locator<NavigationService>();
   final generalApi = GeneralApi();
+  final muaApi = MuaApi();
   var isLoggedIn = locator<LocalDatabaseService>().isLoggedIn();
   static TextStyle optionStyle = TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
 
@@ -30,6 +32,7 @@ class HomeLayoutViewModel extends BaseViewModel {
   List<Mua> graduationMua = [];
 
   Future init() async {
+    fetchMuaCategories();
     fetchAccountData();
     fetchLibraries();
     updateTabs();
@@ -42,6 +45,13 @@ class HomeLayoutViewModel extends BaseViewModel {
         _localDatabaseService.saveAccountToBox(account);
       } catch (error) {}
     }
+  }
+  
+  fetchMuaCategories() async {
+    try {
+      final categories = await muaApi.loadCategories();
+      _localDatabaseService.saveMuaCategoriesToBox(categories);
+    } catch (error) {}
   }
 
   fetchLibraries() async {

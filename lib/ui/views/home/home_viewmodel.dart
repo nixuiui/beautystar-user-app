@@ -39,6 +39,10 @@ class HomeViewModel extends BaseViewModel {
       loadDataGraduationMua();
     }
   }
+
+  navigateToMua() {
+    _navigationService.navigateTo(Routes.muaView);
+  }
     
   loadHomeCategories() async {
     try {

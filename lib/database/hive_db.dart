@@ -16,5 +16,6 @@ class HiveDB {
     await Hive.openBox<String>('apiTokenBox');
     await Hive.openBox<Account>('accountBox');
     await Hive.openBox<String>('librariesBox');
+    await Hive.openBox<String>('muaCategoriesBox');
   }
 }

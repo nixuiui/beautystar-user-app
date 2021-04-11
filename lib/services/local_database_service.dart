@@ -1,5 +1,6 @@
 import 'package:beautystar_user_app/models/account.dart';
 import 'package:beautystar_user_app/models/library_model.dart';
+import 'package:beautystar_user_app/models/mua_category.dart';
 import 'package:hive/hive.dart';
 import 'package:injectable/injectable.dart';
 import 'package:nx_flutter_ui_starter_pack/nx_flutter_ui_starter_pack.dart';
@@ -9,6 +10,7 @@ class LocalDatabaseService {
   final apiTokenBox = Hive.box<String>('apiTokenBox');
   final accountBox = Hive.box<Account>('accountBox');
   final librariesBox = Hive.box<String>('librariesBox');
+  final muaCategoriesBox = Hive.box<String>('muaCategoriesBox');
   
   // Account related
   void saveAccountToBox(Account data) => accountBox.put(0, data);
@@ -36,6 +38,17 @@ class LocalDatabaseService {
   List<NxOptions<LibraryModel>> getAllLibraries() {
     return librariesBox.isNotEmpty 
       ? libraryModelFromJson(librariesBox.getAt(0)).map((e) => NxOptions(
+        name: e.name,
+        value: e
+      )).toList() 
+      : null;
+  }
+  
+  // Libraries related
+  void saveMuaCategoriesToBox(List<MuaCategory> data) => muaCategoriesBox.put(0, muaCategoriesToJson(data));
+  List<NxOptions<MuaCategory>> getMuaCategories() {
+    return muaCategoriesBox.isNotEmpty 
+      ? muaCategoriesFromJson(librariesBox.getAt(0)).map((e) => NxOptions(
         name: e.name,
         value: e
       )).toList() 

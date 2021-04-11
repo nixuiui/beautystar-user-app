@@ -1,3 +1,4 @@
+import 'package:beautystar_user_app/app/app_consts.dart';
 import 'package:beautystar_user_app/models/home_category.dart';
 import 'package:beautystar_user_app/models/mua.dart';
 import 'package:beautystar_user_app/ui/views/home/home_viewmodel.dart';
@@ -89,14 +90,34 @@ class HomeView extends ViewModelBuilderWidget<HomeViewModel> {
         shrinkWrap: true,
         padding: const EdgeInsets.symmetric(horizontal: 16),
         children: [
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+          Row(
             children: [
-              NxText.subtitle("Category"),
-              SizedBox(height: 4),
-              NxText.small(
-                "Cari service yang Anda inginkan",
-                color: Colors.grey,
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  NxText.subtitle("Kategori Layanan"),
+                  SizedBox(height: 4),
+                  NxText.small(
+                    "Cari service yang Anda inginkan",
+                    color: Colors.grey,
+                  ),
+                ],
+              ),
+              Expanded(
+                child: GestureDetector(
+                  onTap: () => model.navigateToMua(),
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 8),
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        NxText.bold("Cari Mua", color: AppConst.accent),
+                        Icon(Icons.chevron_right_rounded, color: AppConst.accent, size: 18)
+                      ],
+                    ),
+                  ),
+                ),
               ),
             ],
           ),
