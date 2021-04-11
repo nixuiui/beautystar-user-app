@@ -8,8 +8,8 @@ class AppConst {
   static const apiHost        = "http://148.66.133.21/api/v1/";
   bool isProducation          = false;
 
-  static Color primary = Color(0xff0074e8);
-  static Color accent = Color(0xffCFEAFF);
+  static Color primary = Color(0xffd46f89);
+  static Color accent = Color(0xff74a4c0);
   static Color darkYellow = Color(0xffFCBF31);
   static Color orange = Colors.orange[500];
   static Color pink = Color(0xffD820A4);

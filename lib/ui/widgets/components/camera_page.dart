@@ -78,7 +78,7 @@ class _CameraPageState extends State<CameraPage> with WidgetsBindingObserver {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        leading: AppGeneralWidget.backButton(context),
+        leading: AppGeneralWidget.backButton(context, color: Colors.black87),
         bottom: AppGeneralWidget.appBarBorderBottom,
         title: Text(widget.subtitle)
       ),

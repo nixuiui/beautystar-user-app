@@ -16,7 +16,6 @@ class MainApi {
   Map<String, String> headers = {
     HttpHeaders.contentTypeHeader: "application/json",
     HttpHeaders.authorizationHeader: "",
-    "xtra-auth": "ZG95b3V3YW5uYXRoaXNmdWNraW5nYXNob2xl",
   };
 
   Future<String> sendRequest({

@@ -1,3 +1,4 @@
+import 'package:beautystar_user_app/app/app_consts.dart';
 import 'package:beautystar_user_app/app/locator.dart';
 import 'package:beautystar_user_app/database/hive_db.dart';
 import 'package:beautystar_user_app/ui/custom_dialogs/setup_dialog_ui.dart';
@@ -37,8 +38,8 @@ class MyApp extends StatelessWidget {
       primarySwatch: Colors.blue,
       scaffoldBackgroundColor: Colors.white,
       visualDensity: VisualDensity.adaptivePlatformDensity,
-      primaryColor: Color(0xffd46f89),
-      accentColor: Color(0xff74a4c0),
+      primaryColor: AppConst.primary,
+      accentColor: AppConst.accent,
       appBarTheme: AppBarTheme(
         brightness: Brightness.light,
         centerTitle: false,

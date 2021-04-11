@@ -54,7 +54,8 @@ class AccountApi extends MainApi {
     try {
       final response = await sendRequest(
         url: "$host/user/me",
-        requestMethod: RequestMethod.GET
+        requestMethod: RequestMethod.GET,
+        useAuth: true
       );
       return accountFromJson(response);
     } catch (error) {
@@ -87,8 +88,8 @@ class AccountApi extends MainApi {
       );
       
       final response = await sendRequest(
-        url: "$host/user/profile-picture",
-        requestMethod: RequestMethod.PATCH,
+        url: "$host/user/me/profile-picture",
+        requestMethod: RequestMethod.POST,
         useAuth: true,
         isFormData: true,
         body: {"photo": multiPartFile}

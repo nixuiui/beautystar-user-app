@@ -33,7 +33,7 @@ class _SelectFromGalleryState extends State<SelectFromGallery> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Pilih Gambar"),
+        title: Text("Select Image"),
         leading: AppGeneralWidget.backButton(context),
         bottom: AppGeneralWidget.appBarBorderBottom,
       ),
