@@ -2,7 +2,10 @@ import 'package:beautystar_user_app/helper/general_function.dart';
 import 'package:beautystar_user_app/ui/views/profile/setting/edit_profile/edit_profile_viewmodel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:intl/intl.dart';
 import 'package:nx_flutter_ui_starter_pack/nx_button.dart';
+import 'package:nx_flutter_ui_starter_pack/nx_select_box.dart';
+import 'package:nx_flutter_ui_starter_pack/nx_select_date.dart';
 import 'package:nx_flutter_ui_starter_pack/nx_text_field.dart';
 import 'package:stacked/stacked.dart';
 
@@ -31,12 +34,14 @@ class EditProfileView extends ViewModelBuilderWidget<EditProfileViewModel> {
           leading: backButton(context),
           bottom: appBarBorderBottom(),
         ),
-        body: Column(
-          children: [
-            _buildForm(model),
-            Divider(),
-            _buildButton(model),
-          ],
+        body: SafeArea(
+          child: Column(
+            children: [
+              _buildForm(model),
+              Divider(),
+              _buildButton(model),
+            ],
+          ),
         ),
       ),
     );
@@ -48,40 +53,44 @@ class EditProfileView extends ViewModelBuilderWidget<EditProfileViewModel> {
         padding: EdgeInsets.all(16),
         children: [
           NxTextFieldBorderBottom(
-            label: "Password Lama",
-            isObsecure: model.obsecure1,
+            label: "Nama",
             controller: TextEditingController()
-              ..text = model.oldPassword
+              ..text = model?.account?.nama ?? ''
               ..selection = TextSelection.collapsed(
-                offset: model?.oldPassword?.length ?? 0
+                offset: model?.account?.nama?.length ?? 0
               ),
-            onChanged: (val) => model.oldPassword = val,
-            textError: model.oldPasswordErrorText,
+            onChanged: (val) => model.account.nama = val,
+            textError: model.nameErrorText,
+          ),
+          SizedBox(height: 32),
+          NxSelectBox(
+            label: "Jenis Kelamin",
+            text: model?.gender?.name ?? '',
+            options: model.genders,
+            selected: model?.gender,
+            onSelected: (val) => model.updateGender(val)
+          ),
+          SizedBox(height: 32),
+          NxSelectDate(
+            label: "Tanggal Lahir",
+            onSelected: model.updateDate,
+            text: model?.account?.birthDate != null ? DateFormat.yMEd().format(model.account.birthDate) : '',
+            textError: model.dateErrorText,
           ),
           SizedBox(height: 32),
           NxTextFieldBorderBottom(
-            label: "Password Baru",
-            isObsecure: model.obsecure2,
+            label: "Nomor HP",
+            textHint: "08xxxxx",
+            inputType: TextInputType.phone,
             controller: TextEditingController()
-              ..text = model.newPassword
+              ..text = model?.account?.noHp ?? ''
               ..selection = TextSelection.collapsed(
-                offset: model?.newPassword?.length ?? 0
+                offset: model?.account?.noHp?.length ?? 0
               ),
-            onChanged: (val) => model.newPassword = val,
-            textError: model.newPasswordErrorText,
+            onChanged: (val) => model.account.noHp = val,
+            textError: model.phoneNumberErrorText,
           ),
           SizedBox(height: 32),
-          NxTextFieldBorderBottom(
-            label: "Konfirmasi Password Baru",
-            isObsecure: model.obsecure3,
-            controller: TextEditingController()
-              ..text = model.newPasswordConfirm
-              ..selection = TextSelection.collapsed(
-                offset: model?.newPasswordConfirm?.length ?? 0
-              ),
-            onChanged: (val) => model.newPasswordConfirm = val,
-            textError: model.newPasswordConfirmErrorText,
-          ),
         ],
       )
     );

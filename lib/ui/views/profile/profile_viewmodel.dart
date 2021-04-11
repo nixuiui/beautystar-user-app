@@ -27,7 +27,10 @@ class ProfileViewModel extends BaseViewModel {
   }
 
   navigateToEditProfile() {
-    _navigationService.navigateTo(Routes.editProfileView);
+    _navigationService.navigateTo(Routes.editProfileView).then((value) {
+      account = locator<LocalDatabaseService>().getAccount();
+      notifyListeners();
+    });
   }
 
   uploadPhoto(File photo, BuildContext context) async {

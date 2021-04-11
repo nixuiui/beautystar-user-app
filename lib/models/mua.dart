@@ -131,6 +131,10 @@ class Portofolio {
         "photo": photo,
         "service_id": serviceId == null ? null : serviceId,
     };
+
+    getRealPhoto() {
+      return photo.replaceAll("portfolio-thumbnails", "portfolios");
+    }
 }
 
 class Service {

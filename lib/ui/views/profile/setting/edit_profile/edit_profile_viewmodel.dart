@@ -1,7 +1,9 @@
 import 'package:beautystar_user_app/api/account_api.dart';
 import 'package:beautystar_user_app/app/locator.dart';
+import 'package:beautystar_user_app/models/library_model.dart';
 import 'package:beautystar_user_app/services/local_database_service.dart';
 import 'package:beautystar_user_app/ui/custom_dialogs/base_custom_dialog.dart';
+import 'package:nx_flutter_ui_starter_pack/nx_options.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 
@@ -9,53 +11,50 @@ class EditProfileViewModel extends BaseViewModel {
 
   final _navigationService = locator<NavigationService>();
   final _dialogService = locator<DialogService>();
+  final _localDatabaseService = locator<LocalDatabaseService>();
   
   var account = locator<LocalDatabaseService>().getAccount();
   var api = AccountApi();
+  var genders = locator<LocalDatabaseService>().getLibrariesByCategory(CategoryEnum.Gender);
+  var gender = NxOptions<LibraryModel>();
 
-  var obsecure1 = true;
-  var obsecure2 = true;
-  var obsecure3 = true;
+  var nameErrorText = '';
+  var dateErrorText = '';
+  var phoneNumberErrorText = '';
+  var genderErrorText = '';
 
-  var oldPassword = '';
-  var newPassword = '';
-  var newPasswordConfirm = '';
-  
-  var oldPasswordErrorText = '';
-  var newPasswordErrorText = '';
-  var newPasswordConfirmErrorText = '';
+  Future init() async {
+    gender = genders.firstWhere((e) => e.value.id == account?.gender?.id, orElse: () => null);
+  }
 
-  Future init() async {}
-
-  toggleObsecure1() {
-    obsecure1 = !obsecure1;
+  updateDate(DateTime date) {
+    account.birthDate = date;
     notifyListeners();
   }
-  
-  toggleObsecure2() {
-    obsecure2 = !obsecure2;
-    notifyListeners();
-  }
-  
-  toggleObsecure3() {
-    obsecure3 = !obsecure3;
+
+  updateGender(NxOptions<LibraryModel> data) {
+    gender = data;
+    account.gender = data.value;
     notifyListeners();
   }
 
   Future save() async {
     if(
-      oldPassword != null && oldPassword != '' &&
-      newPassword != null && newPassword != '' &&
-      newPasswordConfirm != null && newPasswordConfirm != ''
+      account?.nama != null && account?.nama != '' &&
+      account?.birthDate != null &&
+      account?.gender != null &&
+      account?.noHp != null && account?.noHp != ''
     ) {
       try {
         setBusy(true);
         notifyListeners();
-        await api.updatePassword(oldPassword: oldPassword, password: newPassword);
+        await api.updateProfile(account: account);
+        account = await api.me();
+        _localDatabaseService.saveAccountToBox(account);
         await _dialogService.showCustomDialog(
           variant: DialogType.base,
           title: 'Berhasil',
-          description: "Berhasil mengubah password",
+          description: "Berhasil mengubah",
           mainButtonTitle: 'OK',
         );
         _navigationService.back();
@@ -75,19 +74,22 @@ class EditProfileViewModel extends BaseViewModel {
   }
 
   resetErrorText() {
-    oldPasswordErrorText = '';
-    newPasswordErrorText = '';
-    newPasswordConfirmErrorText = '';
+    nameErrorText = '';
+    dateErrorText = '';
+    phoneNumberErrorText = '';
+    genderErrorText = '';
     notifyListeners();
   }
 
   setErrorText() {
-    if(oldPassword == null || oldPassword == '')
-      oldPasswordErrorText = 'Password lama harus diisi';
-    if(newPassword == null || newPassword == '')
-      newPasswordErrorText = 'Password lama harus diisi';
-    if(newPassword != newPasswordConfirm)
-      newPasswordConfirmErrorText = 'Password harus sama';
+    if(account?.nama == null || account?.nama == '')
+      nameErrorText = 'Nama harus diisi';
+    if(account?.birthDate == null)
+      dateErrorText = 'Tanggal lahir harus diisi';
+    if(account?.noHp == null || account?.noHp == '')
+      nameErrorText = 'No HP harus diisi';
+    if(account?.gender == null)
+      nameErrorText = 'Jenis kelamin harus diisi';
     notifyListeners();
   }
 

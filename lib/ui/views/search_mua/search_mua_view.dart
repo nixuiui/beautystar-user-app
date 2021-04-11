@@ -25,21 +25,26 @@ class SearchMuaView extends ViewModelBuilderWidget<SearchMuaViewModel> {
         statusBarIconBrightness: Brightness.light,
         statusBarBrightness: Brightness.light,
       ),
-      child: Scaffold(
-        appBar: AppBar(
-          title: NxTextFieldBox(
-            textHint: "Cari ...",
-            suffixIcon: Icons.search,
-            controller: TextEditingController()
-              ..text = model.search
-              ..selection = TextSelection.collapsed(offset: model.search.length),
-            onChanged: model.searchChanged,
-            onFieldSubmitted: (val) => model.loadData(),
+      child: GestureDetector(
+        behavior: HitTestBehavior.translucent,
+        onTap: () => FocusScope.of(context).unfocus(),
+        child: Scaffold(
+          appBar: AppBar(
+            title: NxTextFieldBox(
+              textHint: "Cari ...",
+              suffixIcon: Icons.search,
+              suffixIconClicked: model.loadData,
+              controller: TextEditingController()
+                ..text = model.search
+                ..selection = TextSelection.collapsed(offset: model.search.length),
+              onChanged: model.searchChanged,
+              onFieldSubmitted: (val) => model.loadData(),
+            ),
+            leading: backButton(context),
+            bottom: appBarBorderBottom(),
           ),
-          leading: backButton(context),
-          bottom: appBarBorderBottom(),
+          body: _buildListData(model)
         ),
-        body: _buildListData(model)
       ),
     );
   }

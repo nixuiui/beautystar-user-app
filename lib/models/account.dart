@@ -125,12 +125,20 @@ class Account extends HiveObject{
         "token": token,
     };
     
+    Map<String, dynamic> toJsonEditProfile() => {
+        "name": nama,
+        "gender": gender?.id,
+        "birth_date": "${birthDate.year.toString().padLeft(4, '0')}-${birthDate.month.toString().padLeft(2, '0')}-${birthDate.day.toString().padLeft(2, '0')}",
+        "no_hp": noHp,
+    };
+
     Map<String, dynamic> toJsonRegister() => {
         "name": nama,
         "username": username,
         "email": email,
         "gender": gender?.id,
         "no_hp": noHp,
+        "birth_date": "${birthDate.year.toString().padLeft(4, '0')}-${birthDate.month.toString().padLeft(2, '0')}-${birthDate.day.toString().padLeft(2, '0')}",
         "password": password
     };
 }

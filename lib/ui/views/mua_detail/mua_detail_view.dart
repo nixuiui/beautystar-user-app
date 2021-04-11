@@ -1,6 +1,7 @@
 import 'package:beautystar_user_app/helper/general_function.dart';
 import 'package:beautystar_user_app/models/mua.dart';
 import 'package:beautystar_user_app/ui/views/mua_detail/mua_detail_viewmodel.dart';
+import 'package:beautystar_user_app/ui/widgets/components/photo_viewer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:indonesia/indonesia.dart';
@@ -49,7 +50,7 @@ class MuaDetailView extends ViewModelBuilderWidget<MuaDetailViewModel> {
           children: [
             _buildHeader(model),
             Divider(height: 0),
-            _buildPortfolio(model),
+            _buildPortfolio(model, context),
             _buildPriceList(model),
           ],
         ),
@@ -57,7 +58,7 @@ class MuaDetailView extends ViewModelBuilderWidget<MuaDetailViewModel> {
     );
   }
 
-  Widget _buildPortfolio(MuaDetailViewModel model) {
+  Widget _buildPortfolio(MuaDetailViewModel model, BuildContext context) {
     return (mua?.portofolios?.length ?? 0) <= 0 ? Container() : Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -78,6 +79,11 @@ class MuaDetailView extends ViewModelBuilderWidget<MuaDetailViewModel> {
             width: (widthScreen * 0.4),
             borderRadius: 8,
             color: Colors.grey[100],
+            onPressed: () => Navigator.push(context, MaterialPageRoute(
+              builder: (context) => PhotoViewer(
+                imageNetwork: model.mua.portofolios[index]?.getRealPhoto() ?? ""
+              )
+            )),
             image: NetworkImage(model.mua.portofolios[index]?.photo ?? ""),
           ))
         ),

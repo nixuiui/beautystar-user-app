@@ -62,6 +62,20 @@ class AccountApi extends MainApi {
       throw error;
     }
   }
+  
+  Future<bool> updateProfile({Account account}) async {
+    try {
+      await sendRequest(
+        url: "$host/user/me",
+        requestMethod: RequestMethod.PATCH,
+        useAuth: true,
+        body: account.toJsonEditProfile()
+      );
+      return true;
+    } catch (error) {
+      throw error;
+    }
+  }
 
   Future<Account> updatePassword({String oldPassword, String password}) async {
     try {
