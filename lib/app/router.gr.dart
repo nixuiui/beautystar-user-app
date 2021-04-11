@@ -9,9 +9,10 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 
+import '../models/mua.dart';
 import '../ui/views/forgot_password/forgot_password_view.dart';
 import '../ui/views/home/home_view.dart';
-import '../ui/views/home_layout/home_layout.dart';
+import '../ui/views/home_layout/home_layout_view.dart';
 import '../ui/views/login/login_view.dart';
 import '../ui/views/profile/profile_view.dart';
 import '../ui/views/profile/setting/edit_password/edit_password_view.dart';
@@ -25,7 +26,7 @@ class Routes {
   static const String loginView = '/login-view';
   static const String forgotPasswordView = '/forgot-password-view';
   static const String homeView = '/home-view';
-  static const String homeLayout = '/home-layout';
+  static const String homeLayoutView = '/home-layout-view';
   static const String profileView = '/profile-view';
   static const String editPasswordView = '/edit-password-view';
   static const String editProfileView = '/edit-profile-view';
@@ -35,7 +36,7 @@ class Routes {
     loginView,
     forgotPasswordView,
     homeView,
-    homeLayout,
+    homeLayoutView,
     profileView,
     editPasswordView,
     editProfileView,
@@ -51,7 +52,7 @@ class Router extends RouterBase {
     RouteDef(Routes.loginView, page: LoginView),
     RouteDef(Routes.forgotPasswordView, page: ForgotPasswordView),
     RouteDef(Routes.homeView, page: HomeView),
-    RouteDef(Routes.homeLayout, page: HomeLayout),
+    RouteDef(Routes.homeLayoutView, page: HomeLayoutView),
     RouteDef(Routes.profileView, page: ProfileView),
     RouteDef(Routes.editPasswordView, page: EditPasswordView),
     RouteDef(Routes.editProfileView, page: EditProfileView),
@@ -84,14 +85,20 @@ class Router extends RouterBase {
       );
     },
     HomeView: (data) {
+      final args = data.getArgs<HomeViewArguments>(
+        orElse: () => HomeViewArguments(),
+      );
       return MaterialPageRoute<dynamic>(
-        builder: (context) => HomeView(),
+        builder: (context) => HomeView(
+          mua: args.mua,
+          dataUpdated: args.dataUpdated,
+        ),
         settings: data,
       );
     },
-    HomeLayout: (data) {
+    HomeLayoutView: (data) {
       return MaterialPageRoute<dynamic>(
-        builder: (context) => HomeLayout(),
+        builder: (context) => HomeLayoutView(),
         settings: data,
       );
     },
@@ -114,4 +121,15 @@ class Router extends RouterBase {
       );
     },
   };
+}
+
+/// ************************************************************************
+/// Arguments holder classes
+/// *************************************************************************
+
+/// HomeView arguments holder class
+class HomeViewArguments {
+  final List<Mua> mua;
+  final void Function(List<Mua>) dataUpdated;
+  HomeViewArguments({this.mua, this.dataUpdated});
 }

@@ -43,7 +43,7 @@ class LoginViewModel extends BaseViewModel {
         _localDatabaseService.saveAccountToBox(response);
         _localDatabaseService.saveApiTokenToBox(response.token);
         _navigationService.back();
-        _navigationService.clearStackAndShow(Routes.homeLayout);
+        _navigationService.clearStackAndShow(Routes.homeLayoutView);
         setBusy(false);
         notifyListeners();
       } catch (error) {

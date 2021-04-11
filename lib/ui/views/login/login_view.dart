@@ -32,12 +32,14 @@ class LoginView extends ViewModelBuilderWidget<LoginViewModel> {
           leading: backButton(context),
           bottom: appBarBorderBottom(),
         ),
-        body: Column(
-          children: [
-            _buildForm(model),
-            Divider(),
-            _buildButton(model),
-          ],
+        body: SafeArea(
+          child: Column(
+            children: [
+              _buildForm(model),
+              Divider(),
+              _buildButton(model),
+            ],
+          ),
         ),
       ),
     );

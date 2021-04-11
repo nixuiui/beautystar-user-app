@@ -1,3 +1,4 @@
+import 'package:beautystar_user_app/models/mua.dart';
 import 'package:beautystar_user_app/ui/views/home/home_viewmodel.dart';
 import 'package:beautystar_user_app/ui/widgets/items/mua_item_square.dart';
 import 'package:beautystar_user_app/ui/widgets/items/slider_item.dart';
@@ -10,11 +11,18 @@ import 'package:stacked/stacked.dart';
 // ignore: must_be_immutable
 class HomeView extends ViewModelBuilderWidget<HomeViewModel> {
 
+  final List<Mua> mua;
+  final ValueChanged<List<Mua>> dataUpdated;
+
+  HomeView({this.mua, this.dataUpdated});
+
   @override
   bool get reactive => super.reactive;
 
   @override
-  HomeViewModel viewModelBuilder(BuildContext context) => HomeViewModel();
+  HomeViewModel viewModelBuilder(BuildContext context) => HomeViewModel(
+    mua: mua
+  );
 
   @override
   void onViewModelReady(HomeViewModel model) => model.init();
@@ -23,6 +31,10 @@ class HomeView extends ViewModelBuilderWidget<HomeViewModel> {
 
   @override
   Widget builder(BuildContext context, HomeViewModel model, Widget child) {
+
+    if(dataUpdated != null) {
+      dataUpdated(model.mua);
+    }
 
     widthScreen = MediaQuery.of(context).size.width;
 
@@ -38,7 +50,7 @@ class HomeView extends ViewModelBuilderWidget<HomeViewModel> {
         body: ListView(
           children: [
             _buildSlider(model, context),
-            _buildWeddingMakeUp(),
+            _buildWeddingMakeUp(model),
             _buildHairDo(),
           ],
         )
@@ -46,7 +58,7 @@ class HomeView extends ViewModelBuilderWidget<HomeViewModel> {
     );
   }
 
-  Widget _buildWeddingMakeUp() {
+  Widget _buildWeddingMakeUp(HomeViewModel model) {
     return Container(
       margin: EdgeInsets.only(bottom: 32),
       child: Column(
@@ -69,10 +81,10 @@ class HomeView extends ViewModelBuilderWidget<HomeViewModel> {
           SizedBox(height: 16),
           Container(
             height: (widthScreen * 0.4),
-            child: ListView.separated(
+            child: model.isBusy ? Center(child: NxLoadingSpinner()) : ListView.separated(
               padding: EdgeInsets.symmetric(horizontal: 16),
               scrollDirection: Axis.horizontal,
-              itemCount: 4,
+              itemCount: model.mua.length,
               separatorBuilder: (context, index) => SizedBox(width: 8),
               itemBuilder: (context, index) => MuaItemSquare(size: widthScreen * 0.4)
             ),

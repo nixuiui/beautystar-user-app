@@ -22,7 +22,7 @@ class AccountAdapter extends TypeAdapter<Account> {
       email: fields[2] as String,
       username: fields[3] as String,
       balance: fields[4] as int,
-      gender: fields[5] as int,
+      gender: fields[5] as LibraryModel,
       birthDate: fields[6] as DateTime,
       profilePhoto: fields[7] as String,
       addressId: fields[8] as int,

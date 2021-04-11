@@ -13,7 +13,7 @@ class SplashViewModel extends BaseViewModel {
   }
 
   navigateToHome() {
-    _navigationService.clearStackAndShow(Routes.homeLayout);
+    _navigationService.clearStackAndShow(Routes.homeLayoutView);
   }
 
 }

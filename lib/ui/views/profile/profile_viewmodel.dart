@@ -23,7 +23,7 @@ class ProfileViewModel extends BaseViewModel {
 
   logout() {
     _localDatabaseService.logout();
-    _navigationService.clearStackAndShow(Routes.homeLayout);
+    _navigationService.clearStackAndShow(Routes.homeLayoutView);
   }
 
 }

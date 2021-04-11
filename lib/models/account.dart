@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:beautystar_user_app/models/library_model.dart';
 import 'package:hive/hive.dart';
 
 part 'account.g.dart';
@@ -45,7 +46,7 @@ class Account extends HiveObject{
     @HiveField(4)
     int balance;
     @HiveField(5)
-    int gender;
+    LibraryModel gender;
     @HiveField(6)
     DateTime birthDate;
     @HiveField(7)
@@ -83,7 +84,7 @@ class Account extends HiveObject{
         email: json["email"],
         username: json["username"],
         balance: json["balance"],
-        gender: json["gender"],
+        gender: json["gender"] != null ? LibraryModel.fromJson(json["gender"]) : null,
         birthDate: json["birth_date"] != null ? DateTime.parse(json["birth_date"]) : null,
         profilePhoto: json["profile_photo"],
         addressId: json["address_id"],
@@ -107,7 +108,7 @@ class Account extends HiveObject{
         "email": email,
         "username": username,
         "balance": balance,
-        "gender": gender,
+        "gender": gender?.toJson(),
         "birth_date": "${birthDate.year.toString().padLeft(4, '0')}-${birthDate.month.toString().padLeft(2, '0')}-${birthDate.day.toString().padLeft(2, '0')}",
         "profile_photo": profilePhoto,
         "address_id": addressId,
@@ -128,7 +129,7 @@ class Account extends HiveObject{
         "name": nama,
         "username": username,
         "email": email,
-        "gender": gender,
+        "gender": gender?.id,
         "no_hp": noHp,
         "password": password
     };

@@ -40,7 +40,7 @@ class RegisterViewModel extends BaseViewModel {
   
   updateGender(NxOptions<LibraryModel> data) {
     gender = data;
-    account.gender = data.value.id;
+    account.gender = data.value;
     notifyListeners();
   }
 
@@ -60,7 +60,7 @@ class RegisterViewModel extends BaseViewModel {
         _localDatabaseService.saveAccountToBox(account);
         _localDatabaseService.saveApiTokenToBox(account.token);
         _navigationService.back();
-        _navigationService.clearStackAndShow(Routes.homeLayout);
+        _navigationService.clearStackAndShow(Routes.homeLayoutView);
       } catch (error) {
         _dialogService.showCustomDialog(
           variant: DialogType.error,

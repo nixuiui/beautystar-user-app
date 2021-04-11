@@ -8,7 +8,6 @@ import 'package:stacked_services/stacked_services.dart';
 class EditProfileViewModel extends BaseViewModel {
 
   final _navigationService = locator<NavigationService>();
-  final _localDatabaseService = locator<LocalDatabaseService>();
   final _dialogService = locator<DialogService>();
   
   var account = locator<LocalDatabaseService>().getAccount();
