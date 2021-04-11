@@ -9,10 +9,11 @@ class MuaApi extends MainApi {
     int page = 1, 
     int limit = 20,
     String search = "",
+    int category,
   }) async {
     try {
       final response = await sendRequest(
-        url: "$host/public/mua?page=$page&limit=$limit&search=$search",
+        url: "$host/public/mua?page=$page&limit=$limit&search=$search&category=$category",
         requestMethod: RequestMethod.GET
       );
       return muaFromJson(jsonEncode(jsonDecode(response)['rows']));

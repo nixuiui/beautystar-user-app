@@ -90,8 +90,8 @@ class Router extends RouterBase {
       );
       return MaterialPageRoute<dynamic>(
         builder: (context) => HomeView(
-          mua: args.mua,
-          dataUpdated: args.dataUpdated,
+          weddingMua: args.weddingMua,
+          weddingMuaUpdated: args.weddingMuaUpdated,
         ),
         settings: data,
       );
@@ -129,7 +129,7 @@ class Router extends RouterBase {
 
 /// HomeView arguments holder class
 class HomeViewArguments {
-  final List<Mua> mua;
-  final void Function(List<Mua>) dataUpdated;
-  HomeViewArguments({this.mua, this.dataUpdated});
+  final List<Mua> weddingMua;
+  final void Function(List<Mua>) weddingMuaUpdated;
+  HomeViewArguments({this.weddingMua, this.weddingMuaUpdated});
 }

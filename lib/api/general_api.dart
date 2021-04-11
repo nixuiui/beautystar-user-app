@@ -1,9 +1,22 @@
 import 'package:beautystar_user_app/api/main_api.dart';
 import 'package:beautystar_user_app/models/city.dart';
+import 'package:beautystar_user_app/models/home_category.dart';
 import 'package:beautystar_user_app/models/library_model.dart';
 import 'package:beautystar_user_app/models/province.dart';
 
 class GeneralApi extends MainApi {
+
+  Future<List<HomeCategory>> loadHome() async {
+    try {
+      final response = await sendRequest(
+        url: "$host/public/home",
+        requestMethod: RequestMethod.GET
+      );
+      return homeCategoryFromJson(response);
+    } catch (error) {
+      throw error;
+    }
+  }
 
   Future<List<LibraryModel>> loadLibraries() async {
     try {

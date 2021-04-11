@@ -1,4 +1,3 @@
-import 'package:beautystar_user_app/app/app_consts.dart';
 import 'package:beautystar_user_app/ui/views/profile/profile_viewmodel.dart';
 import 'package:beautystar_user_app/ui/widgets/components/camera_page.dart';
 import 'package:beautystar_user_app/ui/widgets/components/photo_viewer.dart';

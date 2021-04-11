@@ -1,15 +1,10 @@
 import 'dart:convert';
 
-import 'package:hive/hive.dart';
-
-part 'mua_category.g.dart';
-
 List<MuaCategory> muaCategoriesFromJson(String str) => List<MuaCategory>.from(json.decode(str).map((x) => MuaCategory.fromJson(x)));
 
 String muaCategoriesToJson(List<MuaCategory> data) => json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
 
-@HiveType(typeId: 5)
-class MuaCategory extends HiveObject {
+class MuaCategory {
     MuaCategory({
         this.id,
         this.vendorCategoryId,
@@ -17,13 +12,9 @@ class MuaCategory extends HiveObject {
         this.name,
     });
 
-    @HiveField(0)
     int id;
-    @HiveField(1)
     int vendorCategoryId;
-    @HiveField(2)
     dynamic parentId;
-    @HiveField(3)
     String name;
 
     factory MuaCategory.fromJson(Map<String, dynamic> json) => MuaCategory(

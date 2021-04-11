@@ -1,40 +1,55 @@
-import 'package:beautystar_user_app/api/account_api.dart';
+import 'package:beautystar_user_app/api/general_api.dart';
 import 'package:beautystar_user_app/api/mua_api.dart';
 import 'package:beautystar_user_app/app/locator.dart';
 import 'package:beautystar_user_app/app/router.gr.dart';
+import 'package:beautystar_user_app/models/home_category.dart';
 import 'package:beautystar_user_app/models/mua.dart';
-import 'package:beautystar_user_app/services/local_database_service.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 
 class HomeViewModel extends BaseViewModel {
 
   final _navigationService = locator<NavigationService>();
-  final localDatabaseService = locator<LocalDatabaseService>();
-  final isLoggedIn = locator<LocalDatabaseService>().isLoggedIn();
   final muaApi = MuaApi();
-  final accountApi = AccountApi();
+  final generalApi = GeneralApi();
 
-  List<Mua> mua;
-  var page = 1,
-      limit = 20,
-      search = "";
+  var isLoadingHomeCategories = false;
+  List<HomeCategory> homeCategories = [];
 
-  HomeViewModel({this.mua});
+  var isLoadingweddingMua = false;
+  List<Mua> weddingMua;
+  
+  var isLoadingGraduationMua = false;
+  List<Mua> graduationMua;
+
+  HomeViewModel({
+    this.weddingMua, 
+    this.homeCategories,
+    this.graduationMua
+  });
 
   Future init() async {
-    fetchAccountData();
-    if(mua.isEmpty) {
-      refresh();
+    if(homeCategories.isEmpty) {
+      loadHomeCategories();
+    }
+    if(weddingMua.isEmpty) {
+      loadDataWeddingMua();
+    }
+    if(graduationMua.isEmpty) {
+      loadDataGraduationMua();
     }
   }
-
-  fetchAccountData() async {
-    if(isLoggedIn) {
-      try {
-        final account = await accountApi.me();
-        localDatabaseService.saveAccountToBox(account);
-      } catch (error) {}
+    
+  loadHomeCategories() async {
+    try {
+      isLoadingHomeCategories = true;
+      notifyListeners();
+      homeCategories = await generalApi.loadHome();
+      isLoadingHomeCategories = false;
+      notifyListeners();
+    } catch (error) {
+      isLoadingHomeCategories = false;
+      notifyListeners();
     }
   }
 
@@ -43,21 +58,33 @@ class HomeViewModel extends BaseViewModel {
   }
 
   refresh() {
-    setBusy(true);
-    loadData();
+    loadDataWeddingMua();
+    loadDataGraduationMua();
   }
 
-  loadData() async {
+  loadDataWeddingMua() async {
     try {
-      mua = await muaApi.loadMua(
-        page: page, 
-        limit: limit, 
-        search: search
-      );
-      setBusy(false);
+      isLoadingweddingMua = true;
+      notifyListeners();
+      weddingMua = await muaApi.loadMua(page: 1, limit: 10, category: 24);
+      isLoadingweddingMua = false;
+      notifyListeners();
     } catch (error) {
-      setBusy(false);
-      print(error);
+      isLoadingweddingMua = false;
+      notifyListeners();
+    }
+  }
+  
+  loadDataGraduationMua() async {
+    try {
+      isLoadingGraduationMua = true;
+      notifyListeners();
+      graduationMua = await muaApi.loadMua(page: 1, limit: 10, category: 3);
+      isLoadingGraduationMua = false;
+      notifyListeners();
+    } catch (error) {
+      isLoadingGraduationMua = false;
+      notifyListeners();
     }
   }
 
